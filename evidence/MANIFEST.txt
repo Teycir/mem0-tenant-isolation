@@ -8,3 +8,7 @@
 5410d28049efe0624dfc4211b375081e53bde43ff1e0146f51f91f6a7cd86ca6  evidence/04_exploit_transcript.txt
 ab819dc302d83c784f085eb4b4bd7ed1394e197b0f21e4766efd2e3694bd0d2d  evidence/MANIFEST.txt
 ce8f7a8a0922dffcc164ebf75ed2a9944960ee4921e0dc308479e45995a3b54b  poc/exploit.py
+
+# post-anchor additions 2026-11-18T20:47Z (anchor remains commit 86d9bbb / 22807d3a…)
+6e1aded23ecf09a945c9d425a76f03ba9c0caaef5c47ff429b3726edeb579008  evidence/06_email_sent_2026-11-18T192930Z.eml
+3d939891fe75787d9a504f92b84686879bfad1b9dfc3f722880047548c956553  advisory/plain-language-explanation.md

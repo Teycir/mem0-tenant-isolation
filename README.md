@@ -14,6 +14,8 @@ tenants' memories. Only the unfiltered `GET /memories` listing is role-gated; su
 | MEM0-2026-03 | Low | 4.3 | CWE-770 |
 
 Detailed advisory: [`advisory/2026-11-18-mem0-tenant-isolation.md`](advisory/2026-11-18-mem0-tenant-isolation.md)
+
+Plain-language explainer: [`advisory/plain-language-explanation.md`](advisory/plain-language-explanation.md)
 Full assessment report with raw evidence: [`report.md`](report.md)
 
 ## Affected
@@ -108,7 +110,9 @@ maintainers acknowledge (72-hour target) and a fix or mitigation is agreed.
 | Date (UTC) | Event |
 |---|---|
 | 2026-11-18 | Findings reproduced against commit `f1791da`, report + PoC captured |
-| 2026-11-18 | Disclosure package prepared locally (no remote, nothing published); maintainer notification **pending** via GitHub private advisory |
+| 2026-11-18 | Disclosure package prepared locally (no remote, nothing published) |
+| 2026-11-18 19:29Z | Email report sent to `support@mem0.ai` from ProtonMail; copy archived at `evidence/06_email_sent_2026-11-18T192930Z.eml` |
+| 2026-11-18 | GitHub private advisory submission **pending** — REST create returns 403 (no admin rights); web form required |
 | 2026-12-18 | Planned follow-up if no response |
 | 2027-02-16 | Planned public disclosure (90 days) |
 

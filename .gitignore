@@ -1,0 +1,10 @@
+pgdata/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.log
+keyB.txt
+keyA.txt
+*.db
+.DS_Store

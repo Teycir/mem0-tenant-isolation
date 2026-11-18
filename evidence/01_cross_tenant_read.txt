@@ -1,0 +1,31 @@
+# 2026-11-18T18:22:34Z low-priv API key -> cross-tenant read
+
+## GET /memories/1bd03115-79b1-4d66-aa2a-452a3209f071
+HTTP/1.1 200 OK
+date: Wed, 18 Nov 2026 18:22:33 GMT
+server: uvicorn
+content-length: 327
+content-type: application/json
+x-request-id: 52e45170
+
+{"id":"1bd03115-79b1-4d66-aa2a-452a3209f071","memory":"Tenant Alice private: SSN 123-45-6789, API token sk-alice-secret","hash":"7f2d497da86a1ddd1e0eb9f22c7af3c2","metadata":null,"score":null,"created_at":"2026-11-18T18:21:57.281436+00:00","updated_at":"2026-11-18T18:21:57.281436+00:00","user_id":"alice_tenant","role":"user"}
+
+## GET /memories/1bd03115-79b1-4d66-aa2a-452a3209f071/history
+HTTP/1.1 200 OK
+date: Wed, 18 Nov 2026 18:22:33 GMT
+server: uvicorn
+content-length: 355
+content-type: application/json
+x-request-id: 0f87987b
+
+[{"id":"b4722864-aa27-496c-8dd0-67d3555bd28f","memory_id":"1bd03115-79b1-4d66-aa2a-452a3209f071","old_memory":null,"new_memory":"Tenant Alice private: SSN 123-45-6789, API token sk-alice-secret","event":"ADD","created_at":"2026-11-18T18:21:57.281436+00:00","updated_at":"2026-11-18T18:21:57.281436+00:00","is_deleted":false,"actor_id":null,"role":"user"}]
+
+## POST /search filters={user_id:alice_tenant}
+HTTP/1.1 200 OK
+date: Wed, 18 Nov 2026 18:22:33 GMT
+server: uvicorn
+content-length: 14
+content-type: application/json
+x-request-id: 8b66ac3a
+
+{"results":[]}

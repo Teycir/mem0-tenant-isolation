@@ -1,3 +1,6 @@
+# NOTE (2026-11-18T21:0xZ): this is the DRAFT body with attachments. The message actually sent
+# (evidence/06_email_sent_2026-11-18T192930Z.eml) carried NO attachments and omitted the
+# 2027-02-16 date; full report offered on request instead.
 To: support@mem0.ai
 Subject: SECURITY: Mem0 vulnerability report
 

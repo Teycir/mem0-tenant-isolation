@@ -1,0 +1,54 @@
+To: support@mem0.ai
+Subject: SECURITY: Mem0 vulnerability report
+
+Hello mem0 security team,
+
+Reporting an authorization flaw in the self-hosted mem0 server, following the
+channel order in SECURITY.md (this email as fallback; a private GitHub advisory
+is being filed via the repository Security tab, ID to follow).
+
+Summary
+-------
+With AUTH_DISABLED=false, the REST API authenticates callers but never binds the
+user_id / agent_id / run_id namespace or the memory id to the caller's principal.
+Any API key whose user has role="user" can enumerate all tenants via GET /entities
+and then read, overwrite and delete other tenants' memories via
+GET /memories?user_id=..., GET|PUT|DELETE /memories/{id},
+GET /memories/{id}/history and POST /search.
+
+Proof it is a bypass, not intended behaviour: the same role=user key returns
+403 {"detail":"Admin role required to list all memories."} on GET /memories with
+no identifier, and 200 once a victim user_id is supplied.
+
+Affected
+--------
+Package: mem0ai (self-hosted server component, server/)
+Version: 2.2.1, commit f1791da (the only build tested)
+Severity: High, CVSS 3.1 8.8 AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H, CWE-639
+
+Reproduction
+------------
+Reproduced end to end on a local build (pgvector + stub OpenAI endpoint, two
+principals, one synthetic victim record created by the victim's own key). The
+harness asserts all 14 steps, records request IDs and UTC timestamps, and exits 0
+only on full confirmation. Transcript SHA-256:
+51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba
+
+Full technical report, transcript and exploit are attached; happy to walk through
+any step or provide a screen recording on request.
+
+Related issues in the same build (details in report): GET /configure exposes
+internal DB/host config to any authenticated key (POST is admin-gated, GET is not,
+and redaction matches exact lower-case key names only).
+
+Disclosure
+----------
+Requesting acknowledgment within 72 hours and a 90-day coordinated window
+(2027-02-16) before any public detail. I will not publish before your review.
+
+AI disclosure: an LLM coding assistant was used for source analysis and drafting.
+Every reproduction step was executed by me against a live build; the transcript is
+a real run.
+
+Regards,
+Teycir

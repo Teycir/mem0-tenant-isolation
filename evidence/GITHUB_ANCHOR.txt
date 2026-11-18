@@ -1,0 +1,8 @@
+GitHub server-side anchor (independent timestamp)
+captured_utc: 2026-11-18T19:02:14Z
+repo: https://github.com/Teycir/mem0-tenant-isolation (private)
+manifest_sha256: 22807d3aecced0021591940db78273f73987b00d3de40a10275a6e04f49bdd25
+commit: 86d9bbbc406a4da5d4e72c52fab37b6ff3885ca9 committer=2026-11-18T18:59:39Z author=2026-11-18T18:59:39Z
+tag_ref_object: f576ddca0b00415662e1c6a5a05c63d3a6c84d10 type=tag
+tag_resolves_to: 86d9bbbc406a4da5d4e72c52fab37b6ff3885ca9
+tag_object_date: Teycir <teycir@users.noreply.github.com> 1795028379 +0000     

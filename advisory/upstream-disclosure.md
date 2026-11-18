@@ -32,7 +32,7 @@ reproduction and confirmed impact; the run log in `evidence/` is that proof.
 | Field | Value |
 |---|---|
 | Ecosystem / package | pip, `mem0ai` |
-| Affected versions | 2.2.1 (server component), commit `f1791da`; the missing checks exist in earlier 2.x server builds |
+| Affected versions | 2.2.1 (server component), commit `f1791da` — the only build tested; earlier 2.x server builds not verified |
 | Component | `server/main.py`, `server/routers/entities.py`, `mem0/memory/main.py` |
 | Weakness | CWE-639 (authorization bypass through user-controlled key), CWE-284 |
 | Severity | High — CVSS 3.1 8.8 `AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H` |

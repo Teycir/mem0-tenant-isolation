@@ -7,10 +7,10 @@
 - **Severity:** High
 - **CVSS 3.1:** 8.8 `AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H`
 - **CWE:** CWE-639, CWE-284
-- **Status:** Disclosed — GitHub private advisory `GHSA-xjgj-pmp7-pf69` submitted 2026-11-18 via the `mem0ai/mem0` web form; maintainer triage pending (email copy also sent to `support@mem0.ai` 2026-11-18T19:29Z)
+- **Status:** Disclosed — GitHub private advisory `GHSA-62c5-2wrq-ffpv` created 2026-11-18T19:20:25Z via the `mem0ai/mem0` web form, state `triage`, severity high, credit `Teycir`, no CVE assigned yet (email copy also sent to `support@mem0.ai` 2026-11-18T19:29Z)
 - **Reporter:** Teycir (independent)
 - **AI involvement:** An LLM coding assistant was used for source analysis and drafting. The reporter personally ran every reproduction step and confirmed all 14 assertions live; the committed transcript is a real run.
-- **Submission channel:** GitHub private advisory `GHSA-xjgj-pmp7-pf69` on `mem0ai/mem0` (web form; REST create returns 403 without admin/security rights), plus `support@mem0.ai`; not sent to a CNA directly.
+- **Submission channel:** GitHub private advisory `GHSA-62c5-2wrq-ffpv` on `mem0ai/mem0` (web form; REST create returns 403 without admin/security rights), plus `support@mem0.ai`; not sent to a CNA directly.
 
 ## Summary
 

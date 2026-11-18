@@ -7,7 +7,7 @@
 - **Severity:** High
 - **CVSS 3.1:** 8.8 `AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H`
 - **CWE:** CWE-639, CWE-284
-- **Status:** Reported upstream; no fix released at time of writing
+- **Status:** Prepared for responsible disclosure; maintainer notification pending
 - **Reporter:** Teycir (independent)
 
 ## Summary

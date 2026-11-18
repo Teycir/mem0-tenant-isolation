@@ -58,7 +58,7 @@ Everything is local, synthetic, and disposable — `docker compose down -v` clea
 | Date (UTC) | Event |
 |---|---|
 | 2026-11-18 | Findings reproduced against commit `f1791da`, report + PoC captured |
-| 2026-11-18 | Repository published; maintainers notified |
+| 2026-11-18 | Disclosure repository published; maintainer notification **pending** |
 | 2026-12-18 | Planned follow-up if no response |
 | 2027-02-16 | Planned public disclosure (90 days) |
 

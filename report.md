@@ -282,3 +282,24 @@ mem0 @ `f1791da` (mem0ai 2.2.1), FastAPI 0.138.1, uvicorn 0.38.0, Starlette 1.3.
 - **JWT algorithm confusion / auth bypass** — refuted. `jose.jwt.decode(..., algorithms=["HS256"])` pinned; API keys bcrypt-verified after 12-char prefix lookup; `ADMIN_API_KEY` compared with `secrets.compare_digest`; login uses `dummy_verify_password()` to avoid a timing oracle.
 - **Host-header SSRF via dashboard `getServerApiUrl()`** — refuted. URL is env-only, host header unused.
 - **Unfiltered `/memories` listing as `role=user`** — correctly blocked (403); recorded as the negative control that makes the `?user_id=` bypass meaningful.
+
+### 5.4 Hardened exploit verification (2026-11-18T18:39Z)
+
+`poc/exploit.py` replays RT-01 as 14 assertions against the live build and exits non-zero if any check fails. Run result: `CONFIRMED`, 14/14 pass, exit 0.
+
+Ownership semantics: the record used for the write/delete proof is created with the **victim's** key (`POST /memories`, `infer=false`), then the low-privilege `role=user` key reads, overwrites and deletes it. The victim key's principal id differs from the attacker's (`24dc4ed9…` vs `f852e738…`, asserted in step 00), so the attacker cannot be the creator.
+
+| Check | Observed |
+|---|---|
+| 00 attacker role | `role="user"` |
+| 00 distinct principals | attacker ≠ victim key owner |
+| 01 tenant enumeration | `alice_tenant`, `bob_tenant` disclosed |
+| 02 victim-owned record | created with victim key, stored `user_id=alice_tenant` |
+| 03 read by id / history / namespace / search | 200, 200, 200, 200 |
+| 04 negative control | unfiltered `GET /memories` → 403 |
+| 05 overwrite + owner read-back | 200; owner sees injected marker |
+| 06 delete + owner read-back | 200; owner `GET` → JSON `null` |
+
+Note: this build answers `200` with `null` for a missing memory id rather than `404`; the verifier accepts either.
+
+Artifacts: `evidence/04_exploit_transcript.txt` (`5410d280…6ca6`), `evidence/04_exploit_transcript.json` (`23a34152…c666`); canonical transcript hash `51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba`.

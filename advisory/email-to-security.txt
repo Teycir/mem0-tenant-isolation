@@ -37,8 +37,8 @@ harness asserts all 14 steps, records request IDs and UTC timestamps, and exits 
 only on full confirmation. Transcript SHA-256:
 51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba
 
-Full technical report, transcript and exploit are attached; happy to walk through
-any step or provide a screen recording on request.
+Full technical report, transcript and exploit available on request; happy to walk
+through any step or provide a screen recording.
 
 Related issues in the same build (details in report): GET /configure exposes
 internal DB/host config to any authenticated key (POST is admin-gated, GET is not,

@@ -89,7 +89,7 @@ Prereqs: mem0 server running with `AUTH_DISABLED=false`; Postgres+pgvector; one 
 5. `GET /memories/1bd03115-…/history` → 200, full mutation history.
 6. `POST /search {"query":"alice","filters":{"user_id":"alice_tenant"},"threshold":0}` → 200, returns victim record.
 7. `PUT /memories/{id} {"text":"overwritten-by-lowpriv-key"}` → 200; subsequent `GET` shows attacker content.
-8. `DELETE /memories/{id}` → 200; `GET` then 404.
+8. `DELETE /memories/{id}` → 200; owner `GET` with the same (valid) UUID returns `200` + `null`.
 9. Negative control: `GET /memories` with no identifier as `role=user` → **403** (proves the role gate exists but is bypassed by step 3).
 
 #### Request
@@ -301,6 +301,8 @@ Ownership semantics: the record used for the write/delete proof is created with 
 | 06 delete + owner read-back | 200; owner `GET` → JSON `null` |
 
 Note: this build answers `200` with `null` for a missing memory id rather than `404`; the verifier accepts either.
+
+Correction note (2026-11-18T19:25Z, live re-check): a *valid but absent* UUID returns `200` + `null`; a **non-UUID** id (e.g. `does-not-exist`) returns `502` `{"detail":"Upstream provider error."}` because pgvector casts the parameter to `uuid`. The verifier accepts `200`+`null` or `404`, never the `502` case.
 
 Artifacts: `evidence/04_exploit_transcript.txt` (`5410d280…6ca6`), `evidence/04_exploit_transcript.json` (`23a34152…c666`); canonical transcript hash `51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba`.
 

@@ -303,3 +303,5 @@ Ownership semantics: the record used for the write/delete proof is created with 
 Note: this build answers `200` with `null` for a missing memory id rather than `404`; the verifier accepts either.
 
 Artifacts: `evidence/04_exploit_transcript.txt` (`5410d280…6ca6`), `evidence/04_exploit_transcript.json` (`23a34152…c666`); canonical transcript hash `51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba`.
+
+Provenance and channel: an LLM assistant supported code analysis and drafting; the reporter executed the harness against a live build and confirmed every assertion. Submission goes through GitHub private advisory on `mem0ai/mem0` (CNA for this repository), per `advisory/upstream-disclosure.md`; `GET /configure` was re-checked on `f1791da` and still uses `verify_auth` only, while `POST /configure` uses `require_admin`.

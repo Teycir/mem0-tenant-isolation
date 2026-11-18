@@ -88,12 +88,27 @@ transcript_sha256: 51543c0d…f8ba
 The committed run is `evidence/04_exploit_transcript.{txt,json}`; hashes in
 `evidence/MANIFEST.txt` (`04_exploit_transcript.json` = `23a34152…c666`).
 
+## Submitting upstream
+
+Per mem0's `SECURITY.md`, use **GitHub Private Vulnerability Reporting**
+(`mem0ai/mem0` → Security → Advisories → New draft), with `support@mem0.ai`
+(subject `SECURITY: Mem0 vulnerability report`) only as fallback. GitHub is the
+CNA that issues this repo's CVEs, so do not mail MITRE first.
+
+Include the required AI disclosure: an LLM assistant was used for code analysis
+and drafting; the reporter ran `poc/exploit.py` against a live build and
+confirmed all 14 assertions plus the recorded impact. Details and ready-to-paste
+fields: [`advisory/upstream-disclosure.md`](advisory/upstream-disclosure.md).
+
+Nothing is published and no remote is configured. Keep it that way until the
+maintainers acknowledge (72-hour target) and a fix or mitigation is agreed.
+
 ## Disclosure timeline
 
 | Date (UTC) | Event |
 |---|---|
 | 2026-11-18 | Findings reproduced against commit `f1791da`, report + PoC captured |
-| 2026-11-18 | Disclosure repository published; maintainer notification **pending** |
+| 2026-11-18 | Disclosure package prepared locally (no remote, nothing published); maintainer notification **pending** via GitHub private advisory |
 | 2026-12-18 | Planned follow-up if no response |
 | 2027-02-16 | Planned public disclosure (90 days) |
 

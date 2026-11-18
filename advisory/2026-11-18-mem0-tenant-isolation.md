@@ -9,6 +9,8 @@
 - **CWE:** CWE-639, CWE-284
 - **Status:** Prepared for responsible disclosure; maintainer notification pending
 - **Reporter:** Teycir (independent)
+- **AI involvement:** An LLM coding assistant was used for source analysis and drafting. The reporter personally ran every reproduction step and confirmed all 14 assertions live; the committed transcript is a real run.
+- **Submission channel:** GitHub private advisory on `mem0ai/mem0` (see `upstream-disclosure.md`); not sent to a CNA directly.
 
 ## Summary
 

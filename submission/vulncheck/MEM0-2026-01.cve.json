@@ -1,0 +1,110 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.1",
+  "cveMetadata": {
+    "cveId": "CVE-2026-XXXXX",
+    "assignerOrgId": "00000000-0000-4000-8000-000000000000",
+    "state": "PUBLISHED",
+    "assignerShortName": "VulnCheck",
+    "dateReserved": "2026-11-21T00:00:00.000Z",
+    "datePublished": "2026-11-21T00:00:00.000Z",
+    "dateUpdated": "2026-11-21T00:00:00.000Z"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "00000000-0000-4000-8000-000000000000",
+        "shortName": "VulnCheck"
+      },
+      "title": "mem0 self-hosted server: broken tenant authorization on memory endpoints",
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "mem0 2.2.1 self-hosted REST API authenticates callers but does not authorize them against the memory namespace or record they address. Every memory endpoint accepts a caller-supplied user_id, agent_id, run_id or memory id with no ownership check. The only role gate (unfiltered GET /memories, 403 for role=user) is bypassed by supplying any identifier. A role=user key can enumerate all tenants via GET /entities and then read, overwrite or delete other tenants' memories via GET /memories?user_id=, GET/PUT/DELETE /memories/{id}, GET /memories/{id}/history and POST /search."
+        }
+      ],
+      "affected": [
+        {
+          "vendor": "mem0",
+          "product": "mem0",
+          "packageName": "mem0ai",
+          "collectionURL": "https://pypi.org/project/mem0ai/",
+          "repo": "https://github.com/mem0ai/mem0",
+          "versions": [
+            {
+              "version": "2.2.1",
+              "status": "affected",
+              "versionType": "semver"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "problemTypes": [
+        {
+          "descriptions": [
+            {
+              "lang": "en",
+              "type": "CWE",
+              "cweId": "CWE-639",
+              "description": "Authorization Bypass Through User-Controlled Key"
+            },
+            {
+              "lang": "en",
+              "type": "CWE",
+              "cweId": "CWE-284",
+              "description": "Improper Access Control"
+            }
+          ]
+        }
+      ],
+      "metrics": [
+        {
+          "cvssV3_1": {
+            "version": "3.1",
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+          }
+        }
+      ],
+      "credits": [
+        {
+          "lang": "en",
+          "type": "finder",
+          "value": "Teycir"
+        }
+      ],
+      "references": [
+        {
+          "url": "https://github.com/mem0ai/mem0",
+          "name": "mem0 repository"
+        },
+        {
+          "url": "https://github.com/mem0ai/mem0/commit/f1791da",
+          "name": "tested commit (2.2.1)"
+        },
+        {
+          "url": "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/",
+          "name": "OWASP API1:2023 BOLA"
+        }
+      ],
+      "timeline": [
+        {
+          "time": "2026-11-18T19:20:25.000Z",
+          "lang": "en",
+          "value": "Reported via GitHub private advisory GHSA-62c5-2wrq-ffpv"
+        },
+        {
+          "time": "2026-11-18T19:29:30.000Z",
+          "lang": "en",
+          "value": "Emailed support@mem0.ai"
+        }
+      ],
+      "source": {
+        "discovery": "EXTERNAL"
+      },
+      "x_mem0Id": "MEM0-2026-01"
+    }
+  }
+}

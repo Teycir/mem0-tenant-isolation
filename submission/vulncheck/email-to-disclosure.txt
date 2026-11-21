@@ -1,0 +1,59 @@
+To: disclosure@vulncheck.com
+Subject: CVE request — mem0 self-hosted server: broken tenant authorization (8.8) + /configure info disclosure (4.3)
+
+Hello VulnCheck disclosure team,
+
+Requesting CVE assignment and coordination for two authorization flaws in mem0's
+self-hosted REST API (package mem0ai, server component). Vendor contact has gone
+unanswered; details below are complete and reproducible.
+
+Vendor: mem0
+Product: mem0 self-hosted server (server/ in github.com/mem0ai/mem0)
+Tested: mem0ai 2.2.1, commit f1791da (2026-11-06). HEAD fff8a64 changes only
+mem0/llms/base.py; server code is unchanged.
+
+1) MEM0-2026-01 — Broken tenant authorization on memory endpoints
+   High, CVSS 3.1 8.8 AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H, CWE-639/CWE-284
+   Any API key with role=user can enumerate all tenants via GET /entities and then
+   read, overwrite and delete other tenants' memories via
+   GET /memories?user_id=..., GET|PUT|DELETE /memories/{id},
+   GET /memories/{id}/history and POST /search.
+   Negative control: the same key gets 403 on GET /memories without an identifier
+   ("Admin role required to list all memories") and 200 once a victim user_id is
+   supplied — a bypass, not intended scoping.
+
+2) MEM0-2026-02 — GET /configure discloses internal infrastructure and
+   unredacted credential keys
+   Medium, CVSS 3.1 4.3 AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N, CWE-200
+   GET /configure depends on verify_auth while POST /configure is admin-gated.
+   Any authenticated key receives vector-store host/port/dbname/user and
+   history_db_path. Redaction matches an exact lower-case key list, so
+   aws_secret_access_key, client_secret, private_key, credentials_path are returned
+   in clear when configured.
+
+Disclosure timeline (all UTC)
+- 2026-11-18T18:39Z  issue reproduced end to end on a local 2.2.1 build; 14/14
+  assertions passed (transcript SHA-256 51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba)
+- 2026-11-18T19:20:25Z  GitHub private advisory GHSA-62c5-2wrq-ffpv created
+  (state triage, severity high, no CVE assigned, not public)
+- 2026-11-18T19:29:30Z  email to support@mem0.ai, subject
+  "SECURITY: Mem0 vulnerability report"
+  (Message-ID <5J6RvUzweY_xG7rpP942ZMxGJWo3DyUXaUqU9I2acFk3teyBeYBZuuM5fme1Gign9EI3204saP6KHRytX0zpr_d_VKDG90Ryoll9Lyujl6c=@protonmail.com>)
+- no acknowledgement to date; mem0 SECURITY.md promises a reply within 72 hours
+
+Please take over coordination. The findings are not public; nothing has been
+published and the working repository has no remote.
+
+Evidence on request (private): full report, raw request/response transcripts,
+hashes, and a 14-assertion exploit plus local harness. Happy to provide a private
+archive or walk an analyst through the reproduction.
+
+AI disclosure: an LLM assistant was used for source analysis and drafting. Every
+reproduction step was executed by me against a live build; the transcript is a real
+run.
+
+Requested CVE records are attached as CVE 5.1 JSON drafts (placeholders for ID and
+assigner org). Credit: Teycir.
+
+Regards,
+Teycir

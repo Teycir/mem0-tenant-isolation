@@ -1,0 +1,100 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.1",
+  "cveMetadata": {
+    "cveId": "CVE-2026-XXXXX",
+    "assignerOrgId": "00000000-0000-4000-8000-000000000000",
+    "state": "PUBLISHED",
+    "assignerShortName": "VulnCheck",
+    "dateReserved": "2026-11-21T00:00:00.000Z",
+    "datePublished": "2026-11-21T00:00:00.000Z",
+    "dateUpdated": "2026-11-21T00:00:00.000Z"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "00000000-0000-4000-8000-000000000000",
+        "shortName": "VulnCheck"
+      },
+      "title": "mem0 self-hosted server: GET /configure discloses internal infrastructure and unredacted credential keys",
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "GET /configure in mem0 2.2.1 depends on verify_auth while POST /configure requires admin. Any authenticated role=user key receives the raw provider configuration, disclosing vector-store host, port, database name and user, plus history_db_path. Redaction matches an exact lower-case key list, so aws_secret_access_key, client_secret, private_key and credentials_path are returned unredacted when configured."
+        }
+      ],
+      "affected": [
+        {
+          "vendor": "mem0",
+          "product": "mem0",
+          "packageName": "mem0ai",
+          "collectionURL": "https://pypi.org/project/mem0ai/",
+          "repo": "https://github.com/mem0ai/mem0",
+          "versions": [
+            {
+              "version": "2.2.1",
+              "status": "affected",
+              "versionType": "semver"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "problemTypes": [
+        {
+          "descriptions": [
+            {
+              "lang": "en",
+              "type": "CWE",
+              "cweId": "CWE-200",
+              "description": "Exposure of Sensitive Information to an Unauthorized Actor"
+            }
+          ]
+        }
+      ],
+      "metrics": [
+        {
+          "cvssV3_1": {
+            "version": "3.1",
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N"
+          }
+        }
+      ],
+      "credits": [
+        {
+          "lang": "en",
+          "type": "finder",
+          "value": "Teycir"
+        }
+      ],
+      "references": [
+        {
+          "url": "https://github.com/mem0ai/mem0",
+          "name": "mem0 repository"
+        },
+        {
+          "url": "https://github.com/mem0ai/mem0/blob/f1791da/server/main.py",
+          "name": "GET /configure (verify_auth), POST /configure (require_admin)"
+        }
+      ],
+      "timeline": [
+        {
+          "time": "2026-11-18T19:20:25.000Z",
+          "lang": "en",
+          "value": "Reported via GitHub private advisory GHSA-62c5-2wrq-ffpv"
+        },
+        {
+          "time": "2026-11-18T19:29:30.000Z",
+          "lang": "en",
+          "value": "Emailed support@mem0.ai"
+        }
+      ],
+      "source": {
+        "discovery": "EXTERNAL"
+      },
+      "x_mem0Id": "MEM0-2026-02"
+    }
+  }
+}

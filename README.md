@@ -102,9 +102,10 @@ and drafting; the reporter ran `poc/exploit.py` against a live build and
 confirmed all 14 assertions plus the recorded impact. Details and ready-to-paste
 fields: [`advisory/upstream-disclosure.md`](advisory/upstream-disclosure.md).
 
-Nothing is published. The repo lives on a private GitHub remote
-(`Teycir/mem0-tenant-isolation`) — keep it private until the maintainers
-acknowledge (72-hour target) and a fix or mitigation is agreed.
+This repository is **public** as of 2026-11-21:
+<https://github.com/Teycir/mem0-tenant-isolation> — it contains the full report,
+evidence transcripts, and the runnable PoC, and serves as the public reproduction
+package for the two VulnCheck submissions.
 
 ## Disclosure timeline
 
@@ -114,6 +115,8 @@ acknowledge (72-hour target) and a fix or mitigation is agreed.
 | 2026-11-18 | Disclosure package prepared locally (nothing published) |
 | 2026-11-18 19:29Z | Email report sent to `support@mem0.ai` from ProtonMail; body-only (no attachments), archived at `evidence/06_email_sent_2026-11-18T192930Z.eml` |
 | 2026-11-18 19:20Z | GitHub private advisory created → `GHSA-62c5-2wrq-ffpv`, severity high, credit `Teycir`; confirmed in state `triage` via REST |
+| 2026-11-21 | Both findings submitted to VulnCheck — MEM0-2026-01 case `68502237-1e2c-4a2d-9d00-baac94a8a65a`, MEM0-2026-02 case `2f43d35e-08a2-4356-b759-0809b3adb080` |
+| 2026-11-21 | Report repository made public (full report + evidence + PoC = reproduction package) |
 
 
 ## Remediation (short)

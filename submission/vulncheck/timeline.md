@@ -9,10 +9,13 @@
 | 2026-11-21T13:42Z | No vendor reply; GHSA still private (HTTP 404); upstream HEAD `fff8a64` contains no server-auth change; latest release remains v2.2.1 |
 | 2026-11-21T16:20Z | VulnCheck case `68502237-1e2c-4a2d-9d00-baac94a8a65a` issued for MEM0-2026-01 submission |
 | 2026-11-21T16:30Z | VulnCheck case `2f43d35e-08a2-4356-b759-0809b3adb080` issued for MEM0-2026-02 submission |
+| 2026-11-21T16:36Z | Report repository `Teycir/mem0-tenant-isolation` made PUBLIC — full report, evidence and PoC now serve as the public reproduction package (submitted to VulnCheck post-facto) |
 
 ## Vendor channels used
 
 1. GitHub private vulnerability reporting — `mem0ai/mem0` Security tab (primary per `SECURITY.md`).
 2. `support@mem0.ai` (fallback per `SECURITY.md`).
 
-No MITRE request was made. No public disclosure has occurred.
+No MITRE request was made. Public disclosure occurred 2026-11-21T16:36Z when the
+report repository was made public (after both VulnCheck submissions were sent;
+the form answers recorded "not publicly disclosed" at send time).

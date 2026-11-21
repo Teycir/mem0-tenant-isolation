@@ -36,8 +36,8 @@ submit only after 19:29:30Z** using the "72 h elapsed" wording now set in
 ## After sending
 
 1. Record VulnCheck ticket/case ID in `timeline.md`, commit.
-2. Do not publish `report.md`, `evidence/`, or `poc/` until a coordinated date is agreed.
-3. Keep the repo private (GitHub `Teycir/mem0-tenant-isolation`, private).
+2. ~~Do not publish~~ — superseded: the repo was made public 2026-11-21 as the reproduction package.
+3. ~~Keep the repo private~~ — superseded: `Teycir/mem0-tenant-isolation` is PUBLIC as of 2026-11-21.
 
 ## Evidence available to VulnCheck
 

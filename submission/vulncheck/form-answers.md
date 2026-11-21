@@ -15,11 +15,11 @@ Source: <https://vulncheck.com/advisories/report>. Values are ready to paste.
 | Tested versions | `mem0ai` 2.2.1, commit `f1791da` (2026-11-06). HEAD `fff8a64` differs only in `mem0/llms/base.py`; server code unchanged. |
 | Coordinate disclosure | **Yes** — vendor unresponsive; please take over coordination |
 | Previously requested CVE from MITRE without response | No |
-| Already publicly disclosed | No — private GitHub advisory `GHSA-62c5-2wrq-ffpv` (state `triage`, no CVE, not public) |
+| Already publicly disclosed | No — private GitHub advisory `GHSA-62c5-2wrq-ffpv` (state `triage`, no CVE, not public). **Post-submission note:** the report repo was made public 2026-11-21T16:36Z — https://github.com/Teycir/mem0-tenant-isolation |
 | AI involvement | Yes — LLM assistant used for source analysis and drafting; reporter executed the 14-step exploit against a live local build and confirmed every assertion |
 | Verified on production code | Yes — release 2.2.1 source, built and run locally (pgvector + stub OpenAI endpoint) |
 | Shodan / Fofa query | N/A — self-hosted software, no internet-wide fingerprint |
-| Plan to publish | Yes, on or after the coordinated disclosure date |
+| Plan to publish | Yes, on or after the coordinated disclosure date. **Post-submission note:** published early — repo public 2026-11-21T16:36Z |
 
 ## Request 1 — MEM0-2026-01
 

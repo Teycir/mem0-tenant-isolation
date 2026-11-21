@@ -114,8 +114,7 @@ acknowledge (72-hour target) and a fix or mitigation is agreed.
 | 2026-11-18 | Disclosure package prepared locally (nothing published) |
 | 2026-11-18 19:29Z | Email report sent to `support@mem0.ai` from ProtonMail; body-only (no attachments), archived at `evidence/06_email_sent_2026-11-18T192930Z.eml` |
 | 2026-11-18 19:20Z | GitHub private advisory created → `GHSA-62c5-2wrq-ffpv`, severity high, credit `Teycir`; confirmed in state `triage` via REST |
-| 2026-12-18 | Planned follow-up if no response |
-| 2027-02-16 | Planned public disclosure (90 days) |
+
 
 ## Remediation (short)
 

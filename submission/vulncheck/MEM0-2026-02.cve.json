@@ -16,7 +16,7 @@
         "orgId": "00000000-0000-4000-8000-000000000000",
         "shortName": "VulnCheck"
       },
-      "title": "mem0 self-hosted server: GET /configure discloses internal infrastructure and unredacted credential keys",
+      "title": "[MEM0-2026-02] mem0 self-hosted server: GET /configure discloses internal infrastructure and unredacted credential keys",
       "descriptions": [
         {
           "lang": "en",
@@ -93,8 +93,7 @@
       ],
       "source": {
         "discovery": "EXTERNAL"
-      },
-      "x_mem0Id": "MEM0-2026-02"
+      }
     }
   }
 }

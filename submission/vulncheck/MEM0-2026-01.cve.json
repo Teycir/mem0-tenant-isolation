@@ -16,7 +16,7 @@
         "orgId": "00000000-0000-4000-8000-000000000000",
         "shortName": "VulnCheck"
       },
-      "title": "mem0 self-hosted server: broken tenant authorization on memory endpoints",
+      "title": "[MEM0-2026-01] mem0 self-hosted server: broken tenant authorization on memory endpoints",
       "descriptions": [
         {
           "lang": "en",
@@ -103,8 +103,7 @@
       ],
       "source": {
         "discovery": "EXTERNAL"
-      },
-      "x_mem0Id": "MEM0-2026-01"
+      }
     }
   }
 }

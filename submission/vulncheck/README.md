@@ -48,3 +48,12 @@ yet; 72 h window closes <timestamp>"). After the gate, use the "72 h elapsed" wo
 
 `report.md`, `evidence/` (transcripts, request/response, hashes), `poc/` (14-assertion
 exploit + local harness). Full package hash list: `evidence/MANIFEST.txt`.
+
+## Validation performed (2026-11-21T13:47Z)
+
+- Both `*.cve.json` parse and validate against the official CVE 5.1 schema
+  (`CVEProject/cve-schema`, `CVE_Record_Format.json`) once `cveId` and `assignerOrgId`
+  are replaced with stand-ins. The shipped drafts keep placeholders on purpose:
+  `CVE-2026-XXXXX` and the all-zero org UUID — VulnCheck assigns both.
+- `sha256sum -c SHA256SUMS` passes.
+- VulnCheck report page reachable (`HTTP 200`).

@@ -33,6 +33,7 @@ Source: <https://vulncheck.com/advisories/report>. Values are ready to paste.
 
 ## Request 2 — MEM0-2026-02
 
+- **VulnCheck case ID:** `2f43d35e-08a2-4356-b759-0809b3adb080` (submitted 2026-11-21)
 - **Title:** `GET /configure` discloses internal infrastructure and unredacted credential keys to any authenticated user
 - **Severity:** Medium, CVSS 3.1 4.3 `AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N`
 - **CWE:** CWE-200

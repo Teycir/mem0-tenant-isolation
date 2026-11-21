@@ -7,7 +7,8 @@
 | 2026-11-18T19:29:30Z | Email to `support@mem0.ai`, subject `SECURITY: Mem0 vulnerability report`; Message-ID `<5J6RvUzweY_xG7rpP942ZMxGJWo3DyUXaUqU9I2acFk3teyBeYBZuuM5fme1Gign9EI3204saP6KHRytX0zpr_d_VKDG90Ryoll9Lyujl6c=@protonmail.com>` |
 | 2026-11-18T19:29:30Z + 72 h = **2026-11-21T19:29:30Z** | Vendor acknowledgement deadline per `SECURITY.md` |
 | 2026-11-21T13:42Z | No vendor reply; GHSA still private (HTTP 404); upstream HEAD `fff8a64` contains no server-auth change; latest release remains v2.2.1 |
-| 2026-11-21T16:20Z | VulnCheck case `68502237-1e2c-4a2d-9d00-baac94a8a65a` issued for MEM0-2026-01 submission; MEM0-2026-02 pending |
+| 2026-11-21T16:20Z | VulnCheck case `68502237-1e2c-4a2d-9d00-baac94a8a65a` issued for MEM0-2026-01 submission |
+| 2026-11-21T16:30Z | VulnCheck case `2f43d35e-08a2-4356-b759-0809b3adb080` issued for MEM0-2026-02 submission |
 
 ## Vendor channels used
 

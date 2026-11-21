@@ -1,6 +1,6 @@
 # VulnCheck submission package — mem0 (2 CVE requests)
 
-Status: **PARTIAL — MEM0-2026-01 submitted to VulnCheck (case `68502237-1e2c-4a2d-9d00-baac94a8a65a`); MEM0-2026-02 pending.**
+Status: **SUBMITTED — MEM0-2026-01 (case `68502237-1e2c-4a2d-9d00-baac94a8a65a`) and MEM0-2026-02 (case `2f43d35e-08a2-4356-b759-0809b3adb080`) both sent to VulnCheck 2026-11-21. Awaiting CVE assignment.**
 Channel: <https://vulncheck.com/advisories/report> (primary) or `disclosure@vulncheck.com`.
 CNA scope note: GitHub is the CNA for `mem0ai/mem0`; a private advisory exists
 (`GHSA-62c5-2wrq-ffpv`, state `triage`, no CVE) and the vendor has not acknowledged.

@@ -23,6 +23,7 @@ Source: <https://vulncheck.com/advisories/report>. Values are ready to paste.
 
 ## Request 1 — MEM0-2026-01
 
+- **VulnCheck case ID:** `68502237-1e2c-4a2d-9d00-baac94a8a65a` (submitted 2026-11-21)
 - **Title:** Broken tenant authorization in mem0 self-hosted memory endpoints
 - **Severity:** High, CVSS 3.1 8.8 `AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H`
 - **CWE:** CWE-639 (primary), CWE-284

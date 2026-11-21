@@ -102,15 +102,16 @@ and drafting; the reporter ran `poc/exploit.py` against a live build and
 confirmed all 14 assertions plus the recorded impact. Details and ready-to-paste
 fields: [`advisory/upstream-disclosure.md`](advisory/upstream-disclosure.md).
 
-Nothing is published and no remote is configured. Keep it that way until the
-maintainers acknowledge (72-hour target) and a fix or mitigation is agreed.
+Nothing is published. The repo lives on a private GitHub remote
+(`Teycir/mem0-tenant-isolation`) — keep it private until the maintainers
+acknowledge (72-hour target) and a fix or mitigation is agreed.
 
 ## Disclosure timeline
 
 | Date (UTC) | Event |
 |---|---|
 | 2026-11-18 | Findings reproduced against commit `f1791da`, report + PoC captured |
-| 2026-11-18 | Disclosure package prepared locally (no remote, nothing published) |
+| 2026-11-18 | Disclosure package prepared locally (nothing published) |
 | 2026-11-18 19:29Z | Email report sent to `support@mem0.ai` from ProtonMail; body-only (no attachments), archived at `evidence/06_email_sent_2026-11-18T192930Z.eml` |
 | 2026-11-18 19:20Z | GitHub private advisory created → `GHSA-62c5-2wrq-ffpv`, severity high, credit `Teycir`; confirmed in state `triage` via REST |
 | 2026-12-18 | Planned follow-up if no response |

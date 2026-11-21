@@ -39,10 +39,11 @@ Disclosure timeline (all UTC)
 - 2026-11-18T19:29:30Z  email to support@mem0.ai, subject
   "SECURITY: Mem0 vulnerability report"
   (Message-ID <5J6RvUzweY_xG7rpP942ZMxGJWo3DyUXaUqU9I2acFk3teyBeYBZuuM5fme1Gign9EI3204saP6KHRytX0zpr_d_VKDG90Ryoll9Lyujl6c=@protonmail.com>)
-- no acknowledgement to date; mem0 SECURITY.md promises a reply within 72 hours
+- no acknowledgement after the vendor's stated 72-hour window
+  (elapsed 2026-11-21T19:29:30Z)
 
-Please take over coordination. The findings are not public; nothing has been
-published and the working repository has no remote.
+Please take over coordination. The findings are not public; the report
+repository is private and nothing has been published.
 
 Evidence on request (private): full report, raw request/response transcripts,
 hashes, and a 14-assertion exploit plus local harness. Happy to provide a private

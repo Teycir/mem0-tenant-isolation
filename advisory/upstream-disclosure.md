@@ -88,7 +88,7 @@ control its creation. Only that synthetic record is modified.
 ## Handling
 
 Per `SECURITY.md`: 72-hour acknowledgement expected; technical details stay
-private until a fix or mitigation ships. This repository has **no remote** and
-nothing has been published. Do not push it publicly before the maintainers
-acknowledge; at most, make it private and share the advisory contents through
-the GitHub security advisory.
+private until a fix or mitigation ships. This repository's remote is
+**private** and nothing has been published. Do not make it public before the
+maintainers acknowledge; share the advisory contents through the GitHub
+security advisory.

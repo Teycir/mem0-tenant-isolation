@@ -29,20 +29,15 @@ MEM0-2026-03 (no rate limit, CWE-770) is **excluded** — Low, not submitted.
 ## Send gate (72 h vendor SLA)
 
 Vendor email sent `2026-11-18T19:29:30Z`; mem0 `SECURITY.md` promises acknowledgement
-within 72 h → **2026-11-21T19:29:30Z**. Do not claim "no response after 72 h" before then.
-
-```bash
-[ "$(date -u +%s)" -ge "$(date -u -d 2026-11-21T19:29:30Z +%s)" ] && echo GO || echo WAIT
-```
-
-Before the gate, send anyway only with the wording in `form-answers.md` ("no acknowledgement
-yet; 72 h window closes <timestamp>"). After the gate, use the "72 h elapsed" wording.
+within 72 h → **2026-11-21T19:29:30Z**. **Decision (2026-11-21): wait for the gate;
+submit only after 19:29:30Z** using the "72 h elapsed" wording now set in
+`form-answers.md` and `email-to-disclosure.txt`.
 
 ## After sending
 
 1. Record VulnCheck ticket/case ID in `timeline.md`, commit.
 2. Do not publish `report.md`, `evidence/`, or `poc/` until a coordinated date is agreed.
-3. Keep the repo private (no remote).
+3. Keep the repo private (GitHub `Teycir/mem0-tenant-isolation`, private).
 
 ## Evidence available to VulnCheck
 

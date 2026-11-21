@@ -41,11 +41,11 @@ Source: <https://vulncheck.com/advisories/report>. Values are ready to paste.
 
 ## Vendor-contact wording
 
-Use exactly one:
+Use exactly this (72 h window elapsed 2026-11-21T19:29:30Z; submission deferred
+until after the gate):
 
-- **Before 2026-11-21T19:29:30Z:** "Reported to the vendor on 2026-11-18T19:20Z (private
-  GitHub advisory) and 2026-11-18T19:29Z (email to support@mem0.ai). No acknowledgement yet;
-  the vendor's 72-hour acknowledgement window closes 2026-11-21T19:29:30Z."
-- **After:** "Reported to the vendor on 2026-11-18T19:20Z (private GitHub advisory) and
-  2026-11-18T19:29Z (email to support@mem0.ai). No acknowledgement after the vendor's
-  stated 72-hour window (elapsed 2026-11-21T19:29:30Z)."
+"Reported to the vendor on 2026-11-18T19:20Z (private GitHub advisory) and
+2026-11-18T19:29Z (email to support@mem0.ai). No acknowledgement after the
+vendor's stated 72-hour window (elapsed 2026-11-21T19:29:30Z)."
+
+Do not use the pre-gate "no acknowledgement yet" variant — the window has closed.

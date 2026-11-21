@@ -18,6 +18,20 @@ Detailed advisory: [`advisory/2026-11-18-mem0-tenant-isolation.md`](advisory/202
 Plain-language explainer: [`advisory/plain-language-explanation.md`](advisory/plain-language-explanation.md)
 Full assessment report with raw evidence: [`report.md`](report.md)
 
+## Disclosure status — read first
+
+This repository **did not exist publicly before the report was filed**. It was
+published immediately *after* the VulnCheck submissions as the complete proof
+package — every claim below is demonstrated by the artifacts in this repo.
+
+| When (UTC) | Step |
+|---|---|
+| 2026-11-18 19:20Z | Vendor contacted first: GitHub private advisory `GHSA-62c5-2wrq-ffpv` on `mem0ai/mem0` |
+| 2026-11-18 19:29Z | Vendor emailed: `support@mem0.ai` — no acknowledgement within the 72 h window |
+| 2026-11-21 16:20Z | **VulnCheck report filed** — MEM0-2026-01, case `68502237-1e2c-4a2d-9d00-baac94a8a65a` |
+| 2026-11-21 16:30Z | **VulnCheck report filed** — MEM0-2026-02, case `2f43d35e-08a2-4356-b759-0809b3adb080` |
+| 2026-11-21 ~16:36Z | **This repo made public** — the full demonstration: report, raw request/response transcripts, hashes, and a 14-assertion runnable exploit (`poc/`) |
+
 ## Affected
 
 - mem0 OSS `server/` REST API (`mem0ai 2.2.1`), commit `f1791da`

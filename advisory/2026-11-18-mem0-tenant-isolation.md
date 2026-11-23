@@ -114,3 +114,19 @@ The 403 is the negative control: the role check exists, and `?user_id=` defeats 
 - CWE-639: https://cwe.mitre.org/data/definitions/639.html
 - OWASP API1:2023 BOLA: https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
 - OWASP API5:2023 BFLA: https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/
+
+
+## Fix verification — commit `f93aba4b53241ccd9db32903cd19d1ff7f0066f0` (2026-11-23 10:36Z)
+
+Cloned `https://github.com/mem0ai/mem0.git` at HEAD `f93aba4b53241ccd9db32903cd19d1ff7f0066f0`
+(message: "fix(security): resolve 22 Vanta HIGH/CRITICAL Dependabot alerts (mongoose, nltk) (#7985)").
+Inspected `server/main.py`, `server/auth.py`, `server/routers/entities.py`, `server/rate_limit.py`.
+
+| Finding | Status | Detail |
+|---|---|---|
+| RT-01 — Cross-tenant memory access (CWE-639, High 8.8) | **NOT FIXED** | `GET /memories?user_id=`, `GET/PUT/DELETE /memories/{id}`, `/history`, `POST /search`, `GET /entities` all guarded only by `verify_auth`; no ownership check compares `_auth.role`/`_auth.user` to the namespace addressed. `GET /entities` still scans all memories and lists every tenant for any key. |
+| RT-02 — `/configure` disclosure (CWE-200, Medium 4.3) | **PARTIALLY FIXED** | `POST /configure` now uses `require_admin` (was `verify_auth`). `GET /configure` still uses `verify_auth` (any authenticated user). `_redact_config` still redacts by exact key-name match only (no substring/suffix). `history_db_path` still exposed to all users. |
+| RT-03 — Rate limiting (CWE-770, Low 4.3) | **PARTIALLY FIXED** | `server/rate_limit.py` exists with `Limiter(key_func=get_remote_address)` and exception handler registered, but **no `@limiter.limit`** decorators applied to `/memories`, `/search`, `/entities`, or `/generate-instructions`. Limit is per-IP, not per-API-key/principal. |
+
+Conclusion: The core vulnerability — any `role=user` API key can enumerate, read, overwrite, and delete other tenants' memories with no server-side ownership check — **remains fully exploitable**. No CVE assigned yet. Continue monitoring upstream for a complete fix.
+

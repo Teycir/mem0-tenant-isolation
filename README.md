@@ -31,12 +31,13 @@ package — every claim below is demonstrated by the artifacts in this repo.
 | 2026-11-21 16:20Z | **VulnCheck report filed** — MEM0-2026-01, case `68502237-1e2c-4a2d-9d00-baac94a8a65a` |
 | 2026-11-21 16:30Z | **VulnCheck report filed** — MEM0-2026-02, case `2f43d35e-08a2-4356-b759-0809b3adb080` |
 | 2026-11-21 ~16:36Z | **This repo made public** — the full demonstration: report, raw request/response transcripts, hashes, and a 14-assertion runnable exploit (`poc/`) |
+| 2026-11-23 10:36Z | Vendor commits `f93aba4b53241ccd9db32903cd19d1ff7f0066f0` on `main`; verified against cloned upstream — RT-01 NOT fixed, RT-02/RT-03 PARTIALLY fixed (see `report.md` fix section). |
 
 ## Affected
 
 - mem0 OSS `server/` REST API (`mem0ai 2.2.1`), commit `f1791da`
 - Configuration: `AUTH_DISABLED=false`, more than one principal sharing the instance
-- Fixed-in: **unreleased** — watch the upstream repository
+- Fixed-in: **partial, unreleased** — commit `f93aba4b53241ccd9db32903cd19d1ff7f0066f0` (2026-11-23 16:06+0530 / 10:36Z) lands on `main`; title "fix(security): resolve 22 Vanta HIGH/CRITICAL Dependabot alerts (mongoose, nltk) (#7985)". RT-01 (cross-tenant isolation) NOT fixed — all memory endpoints still lack ownership checks. RT-02 (/configure) PARTIALLY fixed — POST now requires admin; GET still any-auth, redaction still exact-match only. RT-03 (rate limiting) PARTIALLY fixed — rate_limit.py exists but no limits applied to memory routes. Watch upstream for a complete fix.
 
 ## Proven chain (low-privilege key)
 
@@ -131,6 +132,7 @@ package for the two VulnCheck submissions.
 | 2026-11-18 19:20Z | GitHub private advisory created → `GHSA-62c5-2wrq-ffpv`, severity high, credit `Teycir`; confirmed in state `triage` via REST |
 | 2026-11-21 | Both findings submitted to VulnCheck — MEM0-2026-01 case `68502237-1e2c-4a2d-9d00-baac94a8a65a`, MEM0-2026-02 case `2f43d35e-08a2-4356-b759-0809b3adb080` |
 | 2026-11-21 | Report repository made public (full report + evidence + PoC = reproduction package) |
+| 2026-11-23 10:36Z | Vendor commit `f93aba4b53241ccd9db32903cd19d1ff7f0066f0` on `main`; verified — RT-01 NOT fixed, RT-02/RT-03 PARTIALLY fixed. No CVE assigned yet. |
 
 
 ## Remediation (short)

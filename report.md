@@ -308,3 +308,19 @@ Correction note (2026-11-18T19:25Z, live re-check): a *valid but absent* UUID re
 Artifacts: `evidence/04_exploit_transcript.txt` (`5410d280…6ca6`), `evidence/04_exploit_transcript.json` (`23a34152…c666`); canonical transcript hash `51543c0dce267a8e80d6f6d29d85c3beaccc686996383c6194ad3fd4e10af8ba`.
 
 Provenance and channel: an LLM assistant supported code analysis and drafting; the reporter executed the harness against a live build and confirmed every assertion. Submission goes through GitHub private advisory on `mem0ai/mem0` (CNA for this repository), per `advisory/upstream-disclosure.md`; `GET /configure` was re-checked on `f1791da` and still uses `verify_auth` only, while `POST /configure` uses `require_admin`.
+
+
+## 5.5 Fix verification — commit `f93aba4b53241ccd9db32903cd19d1ff7f0066f0` (2026-11-23 10:36Z)
+
+Cloned `https://github.com/mem0ai/mem0.git` at HEAD `f93aba4b53241ccd9db32903cd19d1ff7f0066f0`
+(message: "fix(security): resolve 22 Vanta HIGH/CRITICAL Dependabot alerts (mongoose, nltk) (#7985)").
+Inspected `server/main.py`, `server/auth.py`, `server/routers/entities.py`, `server/rate_limit.py`.
+
+| Finding | Status | Detail |
+|---|---|---|
+| RT-01 — Cross-tenant memory access (CWE-639, High 8.8) | **NOT FIXED** | `GET /memories?user_id=`, `GET/PUT/DELETE /memories/{id}`, `/history`, `POST /search`, `GET /entities` all guarded only by `verify_auth`; no ownership check compares `_auth.role`/`_auth.user` to the namespace addressed. `GET /entities` still scans all memories and lists every tenant for any key. |
+| RT-02 — `/configure` disclosure (CWE-200, Medium 4.3) | **PARTIALLY FIXED** | `POST /configure` now uses `require_admin` (was `verify_auth`). `GET /configure` still uses `verify_auth` (any authenticated user). `_redact_config` still redacts by exact key-name match only (no substring/suffix). `history_db_path` still exposed to all users. |
+| RT-03 — Rate limiting (CWE-770, Low 4.3) | **PARTIALLY FIXED** | `server/rate_limit.py` exists with `Limiter(key_func=get_remote_address)` and exception handler registered, but **no `@limiter.limit`** decorators applied to `/memories`, `/search`, `/entities`, or `/generate-instructions`. Limit is per-IP, not per-API-key/principal. |
+
+Conclusion: The core vulnerability — any `role=user` API key can enumerate, read, overwrite, and delete other tenants' memories with no server-side ownership check — **remains fully exploitable**. No CVE assigned yet. Continue monitoring upstream for a complete fix.
+

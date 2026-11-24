@@ -9,7 +9,7 @@
 | Generated (UTC) | 2026-11-18T18:25:09Z |
 | Scope | `server/` REST API + `mem0/` core, self-hosted with pgvector (`pgvector/pgvector:pg17`), auth enabled (`AUTH_DISABLED=false`) |
 | Status | FINAL — all claims reproduced live on 2026-11-18 |
-| Disclosure | Vendor contacted 2026-11-18 (GHSA + email, no reply in 72 h); reported to VulnCheck 2026-11-21 (cases `68502237-1e2c-4a2d-9d00-baac94a8a65a`, `2f43d35e-08a2-4356-b759-0809b3adb080`); this repo published immediately after as the public proof package |
+| Disclosure | Vendor contacted 2026-11-18 (GHSA + email, no reply in 72 h); reported to VulnCheck 2026-11-21 (cases `68502237-1e2c-4a2d-9d00-baac94a8a65a`, `2f43d35e-08a2-4356-b759-0809b3adb080`) and to Vulners CNA by email 2026-11-24; this repo published immediately after as the public proof package |
 
 ## 1. Executive Summary
 

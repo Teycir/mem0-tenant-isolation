@@ -12,6 +12,7 @@
 | 2026-11-21T16:36Z | Report repository `Teycir/mem0-tenant-isolation` made PUBLIC — full report, evidence and PoC now serve as the public reproduction package (submitted to VulnCheck post-facto) |
 | 2026-11-23T10:36Z | Upstream `main` @ `f93aba4b` (PR #7985, Dependabot/Vanta fixes) verified against clone: MEM0-2026-01 NOT fixed, MEM0-2026-02 PARTIALLY fixed (`POST /configure` now `require_admin`; `GET` still any-auth, exact-match redaction, `history_db_path` exposed). See `report.md` §5.5 |
 | 2026-11-24 | Follow-up status request to `disclosure@vulncheck.com` re cases `68502237-…` and `2f43d35e-…` (CVE assignment status, timeline, fix-status summary). Body: `followup-vulncheck-2026-11-24.txt` |
+| 2026-11-24 | Vulners CNA emails sent to `cna@vulners.com` for both findings (after VulnCheck submission): MEM0-2026-01 (High, CVSS 8.8) and MEM0-2026-02 (Medium, CVSS 4.3). Bodies drafted in `submission/vulners/email-to-cna-mem0-2026-0{1,2}.txt`; sent `.eml` archival pending |
 
 ## Vendor channels used
 

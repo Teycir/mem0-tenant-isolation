@@ -1,0 +1,55 @@
+To: disclosure@vulncheck.com
+Subject: Status request — mem0 submissions (cases 68502237-1e2c-4a2d-9d00-baac94a8a65a, 2f43d35e-08a2-4356-b759-0809b3adb080)
+
+Hello VulnCheck disclosure team,
+
+Following up on two vulnerability reports I submitted on 2026-11-21 regarding mem0's
+self-hosted REST API (package mem0ai, tested on 2.2.1, commit f1791da):
+
+1. MEM0-2026-01 — Broken tenant authorization on memory endpoints.
+   CVSS 3.1 8.8 (AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H), CWE-639/CWE-284.
+   Any role=user API key can enumerate all tenants via GET /entities and then
+   read/overwrite/delete other tenants' memories via GET /memories?user_id=…,
+   GET|PUT|DELETE /memories/{id}, /history, POST /search.
+
+2. MEM0-2026-02 — GET /configure information disclosure.
+   CVSS 3.1 4.3 (AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N), CWE-200.
+
+Case IDs: 68502237-1e2c-4a2d-9d00-baac94a8a65a (finding 1) and
+2f43d35e-08a2-4356-b759-0809b3adb080 (finding 2).
+
+Upstream fix status (verified 2026-11-23 against main @ f93aba4b):
+
+- MEM0-2026-01: NOT FIXED — all memory endpoints remain guarded only by
+  verify_auth; no ownership check compares the authenticated principal to the
+  addressed namespace. Still fully exploitable.
+- MEM0-2026-02: PARTIALLY FIXED — POST /configure now requires admin, but
+  GET /configure still accepts any authenticated key, redaction remains
+  exact-key-match only (aws_secret_access_key, client_secret, private_key,
+  credentials_path still returned in clear), and history_db_path is still
+  exposed.
+
+The vendor is actively landing security fixes on main (PR #7985, 2026-11-23)
+but has not addressed the core tenant-isolation flaw, and no release has
+shipped — latest remains v2.2.1.
+
+Status questions:
+- Have either report been assigned to a CNA (or accepted for direct CVE
+  issuance)?
+- Is anything missing on my end? The CVE 5.1 record drafts I supplied still
+  carry cveId/assignerOrgId placeholders — happy to revise per CNA
+  requirements.
+- Expected timeline for assignment, and whether vendor outreach has been
+  attempted on your side.
+
+Context for urgency: vendor contact per SECURITY.md (GitHub private advisory
+GHSA-62c5-2wrq-ffpv, state triage, no acknowledgement after the 72 h window
+elapsed 2026-11-21T19:29:30Z; support@mem0.ai likewise unanswered). The full
+report, evidence and 14-assertion PoC are public at
+https://github.com/Teycir/mem0-tenant-isolation, so I'd appreciate a decision
+or ETA so I can plan coordinated disclosure.
+
+Happy to provide anything else needed.
+
+Regards,
+Teycir

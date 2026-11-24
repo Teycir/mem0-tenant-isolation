@@ -1,0 +1,68 @@
+To: cna@vulners.com
+Subject: CVE request — mem0: GET /configure discloses internal infrastructure and non-redacted credential keys to any authenticated user (Medium, CVSS 4.3)
+
+# mem0 — `GET /configure` information disclosure to any authenticated user (MEM0-2026-02)
+
+## Severity
+
+- **Medium** — CVSS 3.1 **4.3** — `AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N`
+  - Calculator: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N
+  - `PR:L` — any valid API key, including `role=user`.
+- **CWE:** CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor)
+
+## Affected product
+
+mem0 self-hosted REST API (`mem0ai/mem0`, `server/main.py`), tested at commit `f1791da` (mem0ai 2.2.1). Re-checked at upstream `main` HEAD `f93aba4b` (2026-11-23): `POST /configure` is now `require_admin`-gated, but **`GET /configure` remains `verify_auth`-only** — still vulnerable.
+
+## Summary
+
+`GET /configure` depends on `verify_auth`, not `require_admin`, while `POST /configure` is admin-gated. Any authenticated key — including `role=user` — receives the raw provider configuration: vector-store `host`, `port`, `dbname`, `user`, plus `history_db_path`, `model` and `collection_name`.
+
+Additionally, `_redact_config` (`server/main.py:222-229`) redacts by **exact, lower-cased key name** against `SENSITIVE_CONFIG_KEYS = {admin_api_key, api_key, authorization, jwt_secret, password, password_hash, secret, token}`. Keys such as `aws_secret_access_key`, `aws_access_key_id`, `client_secret`, `private_key`, `credentials_path` or `connection_string` do not match and are returned in clear when configured — a latent credential-disclosure bug.
+
+## Verified (live, 2026-11-18)
+
+```http
+GET /configure HTTP/1.1
+X-API-Key: <role=user key>
+
+HTTP/1.1 200 OK
+{"version":"v1.1","vector_store":{"provider":"pgvector","config":{
+  "host":"postgres","port":5432,"dbname":"mem0","user":"mem0", ...}},
+ "history_db_path":"/app/history/history.db", ...}
+```
+
+`vector_store.config.password` and LLM/embedder `api_key` are redacted; internal topology and filesystem path are returned verbatim.
+
+## Impact
+
+Internal datastore topology (host, port, dbname, user) and filesystem paths disclosed to every authenticated tenant. Chains with MEM0-2026-01 (cross-tenant memory access) to target the database directly given any network foothold (SSRF, sidecar, same-VPC). On deployments configured for Bedrock/Vertex, provider secrets outside the exact-match list are disclosed outright.
+
+## Steps to reproduce
+
+Full report and evidence: **https://github.com/Teycir/mem0-tenant-isolation** → `report.md` §RT-02, `evidence/02_entities_search_config.txt` (sha256 `62a58936…bc62`).
+
+```bash
+# any role=user key:
+curl -H "X-API-Key: <key>" http://127.0.0.1:8000/configure
+```
+
+## Root cause locations
+
+- `server/main.py:322-324` — `GET /configure` → `Depends(verify_auth)`; `POST /configure` (~L333) → `Depends(require_admin)`. The admin check was added to the write path only.
+- `server/main.py:222-229` — `_redact_config` exact-match redaction against `SENSITIVE_CONFIG_KEYS`.
+
+## Suggested remediation
+
+- Require `require_admin` on `GET /configure`.
+- Redact by substring/suffix match on the lower-cased key (`secret|key|token|password|credential|authorization|private`).
+- Return a schema allowlist instead of raw config; keep `history_db_path` server-side.
+
+## Disclosure status
+
+- Reporter: Teycir. LLM-assisted analysis/drafting; verified by the reporter against a live local build.
+- GitHub private advisory `GHSA-62c5-2wrq-ffpv` created on `mem0ai/mem0` 2026-11-18 (covers both MEM0-2026-01 and MEM0-2026-02).
+- Vendor contact: `support@mem0.ai` email 2026-11-18T19:29:30Z. No acknowledgement within the 72 h window per `SECURITY.md`.
+- VulnCheck case ID: `2f43d35e-08a2-4356-b759-0809b3adb080` (submitted 2026-11-21).
+- Public report repository: https://github.com/Teycir/mem0-tenant-isolation (public since 2026-11-21T16:36Z).
+- Related: MEM0-2026-01 (cross-tenant memory read/write/delete) is a distinct root cause tracked separately; this finding chains with it.

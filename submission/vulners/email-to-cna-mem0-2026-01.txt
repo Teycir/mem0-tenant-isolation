@@ -1,0 +1,81 @@
+To: cna@vulners.com
+Subject: CVE request — mem0: broken tenant authorization lets any API key read, overwrite and delete other tenants' memories (High, CVSS 8.8)
+
+# mem0 — Broken tenant authorization on all memory endpoints (MEM0-2026-01)
+
+## Severity
+
+- **High** — CVSS 3.1 **8.8** — `AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H`
+  - Calculator: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+  - `PR:L` — exploitation requires any valid API key, including the lowest-privilege `role=user` key issued to a tenant.
+- **CWE:** CWE-639 (Authorization Bypass Through User-Controlled Key), CWE-284 (Improper Access Control)
+
+## Affected product
+
+mem0 self-hosted REST API (`mem0ai/mem0`, `server/` + `mem0/` core), tested at commit `f1791da` (mem0ai 2.2.1, FastAPI 0.138.1, uvicorn 0.38.0) with `AUTH_DISABLED=false` and a pgvector backend. Re-verified **unfixed** at upstream `main` HEAD `f93aba4b` (2026-11-23). Latest release remains v2.2.1.
+
+## Summary
+
+The mem0 server authenticates callers but never authorizes them against the namespace or record they address. Every memory endpoint accepts a caller-supplied `user_id`, `agent_id`, `run_id` or memory `id` and performs no ownership check:
+
+- `GET /entities` returns **every** `user_id`/`agent_id`/`run_id` in the store to any authenticated key — a complete tenant directory.
+- `GET /memories?user_id=`, `GET/PUT/DELETE /memories/{id}`, `GET /memories/{id}/history`, and `POST /search` accept attacker-chosen namespaces/IDs with no ownership or role check.
+- The only role gate — the unfiltered `GET /memories` listing (403 for `role=user`) — is trivially bypassed by supplying any identifier.
+- The server never reads the `Mem0-User-ID` header the official client sends; tenant scoping is delegated entirely to client goodwill.
+
+## Verified (live, 2026-11-18)
+
+With a low-privilege `role=user` key against a seeded victim namespace `alice_tenant`:
+
+```http
+GET /entities                                    -> 200  every tenant listed
+GET /memories?user_id=alice_tenant               -> 200  victim record (PII, token)
+GET /memories/{id}                               -> 200  full record
+GET /memories/{id}/history                       -> 200  mutation history
+POST /search {"filters":{"user_id":"alice_tenant"},"threshold":0} -> 200
+PUT /memories/{id} {"text":"overwritten"}        -> 200
+DELETE /memories/{id}                            -> 200
+GET /memories                                    -> 403  role gate exists, bypassed above
+```
+
+14/14 assertions pass in the assertion-gated PoC (`poc/exploit.py`); evidence transcripts and SHA256 manifest in the public repo.
+
+## Impact
+
+Any holder of a valid API key — including the lowest-privilege `role=user` tenant — can enumerate every namespace, read all stored memories (PII, credentials, conversation history), silently poison records consumed by other tenants' agents, and delete them. Breaks the fundamental multi-tenant guarantee of a memory service; no audit-visible distinction from legitimate traffic. Affects every self-hosted deployment with `AUTH_DISABLED=false` and more than one principal.
+
+## Steps to reproduce
+
+Full report, evidence, and runnable PoC: **https://github.com/Teycir/mem0-tenant-isolation** (public since 2026-11-21; tag `disclosure-2026-11-18`).
+
+```bash
+git clone https://github.com/mem0ai/mem0 && cd mem0 && git checkout f1791da
+MEM0_SRC=$PWD ./poc/setup_local.sh        # pgvector + venv + stub OpenAI + 2 principals
+BASE=http://127.0.0.1:8000 KEY=<role=user key> VICTIM=alice_tenant ./poc/poc_cross_tenant.sh
+# assertion-gated: 14 checks, exit 0 only on full confirmation
+BASE=http://127.0.0.1:8000 ATTACKER_KEY=<key> VICTIM_KEY=<key> VICTIM=alice_tenant \
+  python3 poc/exploit.py --json transcript.json
+```
+
+## Root cause locations
+
+- `server/routers/entities.py:45` and `server/main.py:322-524` — `verify_auth` establishes identity but is never compared to the namespaced data.
+- Core `mem0/memory/main.py` `get`, `get_all`, `search`, `update`, `delete`, `history` operate on caller-supplied identifiers with no scope predicate; `_get_memory_by_id` (~L1222-1267) resolves by ID alone.
+- `mem0/client/main.py` `_client_headers` sends `Mem0-User-ID`; nothing under `server/` reads it.
+
+## Suggested remediation
+
+- Derive the namespace from the authenticated principal server-side and reject requests whose `user_id`/`agent_id`/`run_id` do not match.
+- For `/memories/{id}` and `/history`, load the memory and assert the stored `user_id` is in the caller's allowed set before acting.
+- Restrict `GET /entities` to `require_admin` (or filter to the caller's entities); require admin for cross-namespace search.
+- Treat `Mem0-User-ID` as untrusted input, never as scope. Quick mitigation: gate all memory routes behind `require_admin` until tenant binding exists.
+- Defense-in-depth: per-key namespace allowlist, structured audit log of `(principal, namespace, action)`, regression test asserting 403/404 on a foreign namespace.
+
+## Disclosure status
+
+- Reporter: Teycir. LLM-assisted analysis/drafting; all exploitation executed and verified by the reporter against a live local build.
+- GitHub private advisory `GHSA-62c5-2wrq-ffpv` created on `mem0ai/mem0` 2026-11-18 (state `triage`).
+- Vendor contact: `support@mem0.ai` email 2026-11-18T19:29:30Z (Message-ID and raw `.eml` archived in the report repo `evidence/`). No acknowledgement within the 72 h window per `SECURITY.md`.
+- VulnCheck case ID: `68502237-1e2c-4a2d-9d00-baac94a8a65a` (submitted 2026-11-21).
+- Public report repository: https://github.com/Teycir/mem0-tenant-isolation (public since 2026-11-21T16:36Z).
+- Related: MEM0-2026-02 (`GET /configure` info disclosure) is a distinct root cause tracked separately.
